@@ -186,8 +186,15 @@ class RefHelper(
                 PullType.COMMIT_ID -> {
                     if (!RegexUtil.checkSha(ref)) {
                         EnvHelper.putContext(ContextConstants.CONTEXT_INVALID_REF, "1")
+                        // ref参数为分支
+                        CheckoutInfo(
+                            ref = ref,
+                            startPoint = "refs/remotes/$ORIGIN_REMOTE_NAME/$ref",
+                            upstream = ""
+                        )
+                    } else {
+                        CheckoutInfo(ref = ref, startPoint = "")
                     }
-                    CheckoutInfo(ref = ref, startPoint = "")
                 }
             }
         }
